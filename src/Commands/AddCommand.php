@@ -152,8 +152,7 @@ class AddCommand extends Command
 
     private function tagGIT($version, $buildData)
     {
-        exec("git tag -a ".$version." -m '".$summary."'");
-        exec("git commit -am 'Changelog.md update'");
+        exec("git commit '".getcwd().'/changelog.md'."' -m 'Changelog.md update' && git tag -a ".$version." -m '".$summary."'");
     }
 
 }
