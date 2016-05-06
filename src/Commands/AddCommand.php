@@ -60,12 +60,14 @@ class AddCommand extends Command
         }
 
         $addedMarkdown = '';
+        $summary = '';
 
         foreach (['added', 'changed', 'fixed', 'removed'] as $action) {
             if ($input->getOption($action)) {
                 $addedMarkdown .= "\n### ".ucfirst($action);
                 foreach (explode(',', $input->getOption($action)) as $point) {
                     $addedMarkdown .= "\n- $point";
+                    $summary .= " - $point";
                 }
             }
         }
@@ -99,8 +101,6 @@ class AddCommand extends Command
 
         $newVersion = 'v'.implode('.', $currentVersion);
 
-        $this->tagGIT($newVersion, $addedMarkdown);
-
         $addedMarkdown = "\n## [$newVersion] - ".date('Y-m-d').$addedMarkdown;
 
         if (file_exists(getcwd().'/changelog.md')) {
@@ -110,6 +110,9 @@ class AddCommand extends Command
 
             if (file_put_contents(getcwd().'/changelog.md', $markdown)) {
                 $output->writeln('Changelog updated');
+                $this->tagGIT($newVersion, $summary);
+                $output->writeln('Commit updated');
+                $output->writeln('Repository Tagged with: '.$newVersion);
             }
         } else {
             throw new \Exception("Please run this first: clg log:create {name}", 1);
@@ -150,10 +153,9 @@ class AddCommand extends Command
         return $commitHash;
     }
 
-    private function tagGIT($version, $buildData)
+    private function tagGIT($version, $summary)
     {
-        exec("git tag -a ".$version." -m '".$summary."'");
-        exec("git commit -am 'Changelog.md update'");
+        exec("git commit '".getcwd().'/changelog.md'."' -m 'Changelog.md update' && git tag -a ".$version." -m '".$summary."'");
     }
 
 }
