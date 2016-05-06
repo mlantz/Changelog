@@ -1,0 +1,26 @@
+{
+    "name": "mlantz/changelog",
+    "description": "A tool for managing change logs in your projects",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matt Lantz",
+            "email": "matt@yabhq.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "^3.0"
+    },
+    "require-dev": {
+    },
+    "bin": [
+        "clg"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Mlantz\\Changelog\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

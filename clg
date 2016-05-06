@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+// application.php
+
+require __DIR__.'/../../../vendor/autoload.php';
+
+use Mlantz\Changelog\Commands\AddCommand;
+use Symfony\Component\Console\Application;
+use Mlantz\Changelog\Commands\CreateCommand;
+
+$application = new Application('ChangeLog', 'master');
+
+$application->add(new CreateCommand());
+$application->add(new AddCommand());
+
+$application->run();
