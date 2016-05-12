@@ -8,10 +8,14 @@ require __DIR__.'/../../../vendor/autoload.php';
 use Mlantz\Changelog\Commands\AddCommand;
 use Symfony\Component\Console\Application;
 use Mlantz\Changelog\Commands\CreateCommand;
+use Mlantz\Changelog\Commands\ListCommand;
+use Mlantz\Changelog\Commands\LastCommand;
 
 $application = new Application('ChangeLog', 'master');
 
 $application->add(new CreateCommand());
 $application->add(new AddCommand());
+$application->add(new ListCommand());
+$application->add(new LastCommand());
 
 $application->run();
