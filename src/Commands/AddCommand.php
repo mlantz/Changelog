@@ -64,7 +64,7 @@ class AddCommand extends Command
 
         foreach (['added', 'changed', 'fixed', 'removed'] as $action) {
             if ($input->getOption($action)) {
-                $addedMarkdown .= "\n### ".ucfirst($action);
+                $addedMarkdown .= "\n\n### ".ucfirst($action);
                 foreach (explode(',', $input->getOption($action)) as $point) {
                     $addedMarkdown .= "\n- $point";
                     $summary .= " - $point";
