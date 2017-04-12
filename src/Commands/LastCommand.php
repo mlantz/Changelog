@@ -10,10 +10,8 @@ class LastCommand extends Command
 {
     protected function configure()
     {
-        $this
-            ->setName('log:last')
-            ->setDescription('Get the most recent changelog')
-        ;
+        $this->setName('log:last')
+             ->setDescription('Get the most recent changelog');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
