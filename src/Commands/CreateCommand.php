@@ -37,11 +37,11 @@ class CreateCommand extends Command
 
         $markdown = "# Change Log - ".ucfirst($name)."\nAll notable changes to this project will be documented in this file.\nThis project adheres to [Semantic Versioning](http://semver.org/).\n----\n";
 
-        if (! file_exists(getcwd().'/changelog.md')) {
-            file_put_contents(getcwd().'/changelog.md', $markdown);
+        if (! file_exists(getcwd() . '/CHANGELOG.md')) {
+            file_put_contents(getcwd() . '/CHANGELOG.md', $markdown);
         }
 
-        $output->writeln('Created '.getcwd().'/changelog.md');
+        $output->writeln('Created ' . getcwd() . '/CHANGELOG.md');
 
         $time_end = microtime(true);
         $time = $time_end - $time_start;
