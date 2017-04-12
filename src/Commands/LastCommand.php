@@ -18,20 +18,21 @@ class LastCommand extends Command
     {
         $time_start = microtime(true);
 
-        if (file_exists(getcwd().'/changelog.md')) {
-            $changelog = file_get_contents(getcwd().'/changelog.md');
         $changelog = $this->getChangeLog();
+        $changes = $this->getChangeLogChanges($changelog, $output);
 
-            $changelogParts = explode('----', $changelog);
-
-            $changes = explode('## [', trim($changelogParts[1]));
-
-            foreach ($changes as $index => $change) {
-                if ($index == 1) {
-                    $output->writeln("\n[$change");
-                }
+        foreach ($changes as $index => $change) {
+            if ($index == 1) {
+                $output->writeln("\n[$change");
             }
-        } else {
+        }
+
+        $time_end = microtime(true);
+        $time = round($time_end - $time_start,5);
+
+        $output->writeln("Completed in: ${time} seconds");
+    }
+
     /**
      * Get the current contents of the CHANGELOG
      *
@@ -48,8 +49,23 @@ class LastCommand extends Command
 
         $time_end = microtime(true);
         $time = $time_end - $time_start;
+    /**
+     * Get the latest changes to the CHANGELOG
+     *
+     * @param  string $changelog
+     * @return array
+     */
+    protected function getChangeLogChanges($changelog)
+    {
+        $changelogParts = explode('----', $changelog);
 
-        $output->writeln("\nCompleted in: ".$time." seconds");
+        if(!isset($changelogParts[1])) {
+            throw new \Exception("Your CHANGELOG is empty. Please add some lines first with the clg log:add command.", 1);
+        }
+
+        $changes = explode('## [', trim($changelogParts[1]));
+
+        return $changes;
     }
 
 }
