@@ -12,17 +12,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateCommand extends Command
 {
+    /**
+     * Settings for setting up CHANGELOG command
+     *
+     * @return void
+     */
     protected function configure()
     {
-        $this
-            ->setName('log:create')
-            ->setDescription('Create changelog.md')
+        $this->setName('log:create')
+            ->setDescription('Create CHANGELOG.md')
             ->addArgument(
                 'name',
                 InputArgument::REQUIRED,
                 'The name of the project'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
