@@ -46,6 +46,6 @@ class CreateCommand extends Command
         $time_end = microtime(true);
         $time = $time_end - $time_start;
 
-        $output->writeln("\nCompleted in: ".$time." seconds");
+        $output->writeln("\nCompleted in: ${time} seconds");
     }
 }
