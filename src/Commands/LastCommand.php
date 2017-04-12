@@ -8,12 +8,24 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class LastCommand extends Command
 {
+    /**
+     * Set the name and description of the command
+     *
+     * @return void
+     */
     protected function configure()
     {
         $this->setName('log:last')
              ->setDescription('Get the most recent changelog');
     }
 
+    /**
+     * Display the last change in the CHANGELOG
+     *
+     * @param  \Symfony\Component\Console\Input\InputInterface  $input
+     * @param  \Symfony\Component\Console\Output\OutputInterface $output
+     * @return void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $time_start = microtime(true);
@@ -47,8 +59,6 @@ class LastCommand extends Command
         return $contents;
     }
 
-        $time_end = microtime(true);
-        $time = $time_end - $time_start;
     /**
      * Get the latest changes to the CHANGELOG
      *
