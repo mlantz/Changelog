@@ -20,6 +20,7 @@ class LastCommand extends Command
 
         if (file_exists(getcwd().'/changelog.md')) {
             $changelog = file_get_contents(getcwd().'/changelog.md');
+        $changelog = $this->getChangeLog();
 
             $changelogParts = explode('----', $changelog);
 
@@ -31,8 +32,19 @@ class LastCommand extends Command
                 }
             }
         } else {
+    /**
+     * Get the current contents of the CHANGELOG
+     *
+     * @return string
+     */
+    protected function getChangeLog()
+    {
+        $contents = @file_get_contents(getcwd() . '/changelog.md');
+        if($contents === false) {
             throw new \Exception("Please run this first: clg log:create {name}", 1);
         }
+        return $contents;
+    }
 
         $time_end = microtime(true);
         $time = $time_end - $time_start;
