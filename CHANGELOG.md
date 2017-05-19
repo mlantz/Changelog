@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Handles lower and upper case now
+
 ## [v0.1.5] - 2016-05-12
 ### Added
 - Added list and last commands
