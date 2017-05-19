@@ -2,17 +2,6 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
-
-## [v0.1.8] - 2017-05-19
-
-### Changed
-- Case of changelog
-
-## [v0.1.7] - 2017-05-19
-
-### Changed
-- Case of changelog
-
 ## [v0.1.7] - 2017-05-19
 ### Fixed
 - Issue with case sensitivity
