@@ -16,7 +16,7 @@ class AddCommand extends Command
     {
         $this
             ->setName('log:add')
-            ->setDescription('Add a record to the changelog.md')
+            ->setDescription('Add a record to the CHANGELOG.md')
             ->addArgument(
                 'level',
                 InputArgument::REQUIRED,
@@ -103,14 +103,20 @@ class AddCommand extends Command
 
         $addedMarkdown = "\n## [$newVersion] - ".date('Y-m-d').$addedMarkdown;
 
-        if (file_exists(getcwd().'/changelog.md')) {
-            $changelog = file_get_contents(getcwd().'/changelog.md');
+        $changelogCase = 'changelog';
+
+        if (file_exists(getcwd().'/CHANGELOG.md')) {
+            $changelogCase = 'CHANGELOG';
+        }
+
+        if (file_exists(getcwd().'/'.$changelogCase.'.md')) {
+            $changelog = file_get_contents(getcwd().'/'.$changelogCase.'.md');
             $changelogArray = explode('----', $changelog);
             $markdown = $changelogArray[0]."----\n".$addedMarkdown.$changelogArray[1];
 
-            if (file_put_contents(getcwd().'/changelog.md', $markdown)) {
+            if (file_put_contents(getcwd().'/'.$changelogCase.'.md', $markdown)) {
                 $output->writeln('Changelog updated');
-                $this->tagGIT($newVersion, $summary);
+                $this->tagGIT($newVersion, $summary, $changelogCase);
                 $output->writeln('Commit updated');
                 $output->writeln('Repository Tagged with: '.$newVersion);
             }
@@ -153,9 +159,9 @@ class AddCommand extends Command
         return $commitHash;
     }
 
-    private function tagGIT($version, $summary)
+    private function tagGIT($version, $summary, $changelogCase)
     {
-        exec("git commit '".getcwd().'/changelog.md'."' -m 'Changelog.md update' && git tag -a ".$version." -m '".$summary."'");
+        exec("git commit '".getcwd().'/'.$changelogCase.'.md'."' -m 'Changelog.md update' && git tag -a ".$version." -m '".$summary."'");
     }
 
 }

@@ -2,8 +2,11 @@
 <?php
 
 // application.php
-
-require __DIR__.'/../../../vendor/autoload.php';
+if (file_exists(__DIR__.'/vendor/autoload.php')) {
+    require __DIR__.'/vendor/autoload.php';
+} else {
+    require __DIR__.'/../../../vendor/autoload.php';
+}
 
 use Mlantz\Changelog\Commands\AddCommand;
 use Symfony\Component\Console\Application;

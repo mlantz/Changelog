@@ -24,8 +24,13 @@ class ListCommand extends Command
     {
         $time_start = microtime(true);
 
-        if (file_exists(getcwd().'/changelog.md')) {
-            $changelog = file_get_contents(getcwd().'/changelog.md');
+        $changelogCase = 'changelog';
+        if (file_exists(getcwd().'/CHANGELOG.md')) {
+            $changelogCase = 'CHANGELOG';
+        }
+
+        if (file_exists(getcwd().'/'.$changelogCase.'.md')) {
+            $changelog = file_get_contents(getcwd().'/'.$changelogCase.'.md');
 
             $changelogParts = explode('----', $changelog);
 
