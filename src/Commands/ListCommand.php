@@ -24,10 +24,7 @@ class ListCommand extends Command
     {
         $time_start = microtime(true);
 
-        $changelogCase = 'changelog';
-        if (file_exists(getcwd().'/CHANGELOG.md')) {
-            $changelogCase = 'CHANGELOG';
-        }
+        $changelogCase = $this->getChangelogCase();
 
         if (file_exists(getcwd().'/'.$changelogCase.'.md')) {
             $changelog = file_get_contents(getcwd().'/'.$changelogCase.'.md');
@@ -51,4 +48,14 @@ class ListCommand extends Command
         $output->writeln("\nCompleted in: ".$time." seconds");
     }
 
+    private function getChangelogCase()
+    {
+        foreach (scandir(getcwd().'/') as $file) {
+            if ($file === 'CHANGELOG.md') {
+                return 'CHANGELOG';
+            } elseif ($file === 'changelog.md') {
+                return 'changelog';
+            }
+        }
+    }
 }

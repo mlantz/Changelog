@@ -103,11 +103,7 @@ class AddCommand extends Command
 
         $addedMarkdown = "\n## [$newVersion] - ".date('Y-m-d').$addedMarkdown;
 
-        $changelogCase = 'changelog';
-
-        if (file_exists(getcwd().'/CHANGELOG.md')) {
-            $changelogCase = 'CHANGELOG';
-        }
+        $changelogCase = $this->getChangelogCase();
 
         if (file_exists(getcwd().'/'.$changelogCase.'.md')) {
             $changelog = file_get_contents(getcwd().'/'.$changelogCase.'.md');
@@ -164,4 +160,14 @@ class AddCommand extends Command
         exec("git commit '".getcwd().'/'.$changelogCase.'.md'."' -m 'Changelog.md update' && git tag -a ".$version." -m '".$summary."'");
     }
 
+    private function getChangelogCase()
+    {
+        foreach (scandir(getcwd().'/') as $file) {
+            if ($file === 'CHANGELOG.md') {
+                return 'CHANGELOG';
+            } elseif ($file === 'changelog.md') {
+                return 'changelog';
+            }
+        }
+    }
 }

@@ -52,10 +52,7 @@ class LastCommand extends Command
      */
     protected function getChangeLog()
     {
-        $changelogCase = 'changelog';
-        if (file_exists(getcwd().'/CHANGELOG.md')) {
-            $changelogCase = 'CHANGELOG';
-        }
+        $changelogCase = $this->getChangelogCase();
 
         $contents = file_get_contents(getcwd().'/'.$changelogCase.'.md');
 
@@ -84,4 +81,14 @@ class LastCommand extends Command
         return $changes;
     }
 
+    private function getChangelogCase()
+    {
+        foreach (scandir(getcwd().'/') as $file) {
+            if ($file === 'CHANGELOG.md') {
+                return 'CHANGELOG';
+            } elseif ($file === 'changelog.md') {
+                return 'changelog';
+            }
+        }
+    }
 }
