@@ -41,7 +41,7 @@ class CreateCommand extends Command
 
         $markdown = "# Change Log - " . ucfirst($name) . "\nAll notable changes to this project will be documented in this file.\nThis project adheres to [Semantic Versioning](http://semver.org/).\n----\n";
 
-        $changelogCase = $this->getChangelogCase();
+        $changelogCase = 'CHANGELOG';
 
         file_put_contents(getcwd().'/'.$changelogCase.'.md', $markdown);
 
@@ -51,16 +51,5 @@ class CreateCommand extends Command
         $time = $time_end - $time_start;
 
         $output->writeln("\nCompleted in: {$time} seconds");
-    }
-
-    private function getChangelogCase()
-    {
-        foreach (scandir(getcwd().'/') as $file) {
-            if ($file === 'CHANGELOG.md') {
-                return 'CHANGELOG';
-            } elseif ($file === 'changelog.md') {
-                return 'changelog';
-            }
-        }
     }
 }
