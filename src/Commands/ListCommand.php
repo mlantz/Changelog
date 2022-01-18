@@ -47,7 +47,7 @@ class ListCommand extends Command
 
         $output->writeln("\nCompleted in: ".$time." seconds");
 
-        return true;
+        return Command::SUCCESS;
     }
 
     private function getChangelogCase()

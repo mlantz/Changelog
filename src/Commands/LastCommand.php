@@ -44,7 +44,7 @@ class LastCommand extends Command
 
         $output->writeln("Completed in: {$time} seconds");
 
-        return true;
+        return Command::SUCCESS;
     }
 
     /**
