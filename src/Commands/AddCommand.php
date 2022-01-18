@@ -23,28 +23,28 @@ class AddCommand extends Command
                 'Version level (major|minor|patch)'
             )
             ->addOption(
-               'added',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Code added'
+                'added',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Code added'
             )
             ->addOption(
-               'changed',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Code changed'
+                'changed',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Code changed'
             )
             ->addOption(
-               'fixed',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Code fixed'
+                'fixed',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Code fixed'
             )
             ->addOption(
-               'removed',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Code removed'
+                'removed',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Code removed'
             )
         ;
     }
@@ -55,7 +55,7 @@ class AddCommand extends Command
 
         $level = $input->getArgument('level');
 
-        if (! in_array($level, ['major', 'minor', 'patch']))  {
+        if (! in_array($level, ['major', 'minor', 'patch'])) {
             throw new \InvalidArgumentException("Your version level must be one of the following: major, minor, patch", 1);
         }
 
@@ -124,6 +124,8 @@ class AddCommand extends Command
         $time = $time_end - $time_start;
 
         $output->writeln("\nCompleted in: ".$time." seconds");
+
+        return true;
     }
 
     /*

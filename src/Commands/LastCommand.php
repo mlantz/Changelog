@@ -43,6 +43,8 @@ class LastCommand extends Command
         $time = round($time_end - $time_start, 5);
 
         $output->writeln("Completed in: {$time} seconds");
+
+        return true;
     }
 
     /**

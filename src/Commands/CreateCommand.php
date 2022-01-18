@@ -51,5 +51,7 @@ class CreateCommand extends Command
         $time = $time_end - $time_start;
 
         $output->writeln("\nCompleted in: {$time} seconds");
+
+        return true;
     }
 }
