@@ -9,6 +9,7 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
 }
 
 use Mlantz\Changelog\Commands\AddCommand;
+use Mlantz\Changelog\Commands\SyncCommand;
 use Symfony\Component\Console\Application;
 use Mlantz\Changelog\Commands\CreateCommand;
 use Mlantz\Changelog\Commands\ListCommand;
@@ -20,5 +21,6 @@ $application->add(new CreateCommand());
 $application->add(new AddCommand());
 $application->add(new ListCommand());
 $application->add(new LastCommand());
+$application->add(new SyncCommand());
 
 $application->run();
