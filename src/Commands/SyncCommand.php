@@ -119,10 +119,10 @@ class SyncCommand extends Command
 
             if (! isset($commit[1])) {
                 $commit[1] = $commit[0];
-                $commit[0] = 'Chore';
+                $commit[0] = 'chore';
             }
 
-            $commits[$commit[0]][] = $commit[1];
+            $commits[$commit[0]][] = trim($commit[1]);
         }
 
         return $commits;
