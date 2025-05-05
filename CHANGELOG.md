@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v0.3.0] - 2025-05-05
+
+### Feature
+-  added new sync command for git changelog
+
 ## [v0.2.2] - 2022-01-18
 
 ### Fixed
