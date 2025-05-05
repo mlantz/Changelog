@@ -116,6 +116,12 @@ class SyncCommand extends Command
 
         foreach ($gitCommits as $commit) {
             $commit = explode(':', $commit);
+
+            if (! isset($commit[1])) {
+                $commit[1] = $commit[0];
+                $commit[0] = 'Chore';
+            }
+
             $commits[$commit[0]][] = $commit[1];
         }
 
