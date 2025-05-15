@@ -33,7 +33,7 @@ class CreateCommand extends Command
      * @param  \Symfony\Component\Console\Output\OutputInterface $output
      * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $time_start = microtime(true);
 
