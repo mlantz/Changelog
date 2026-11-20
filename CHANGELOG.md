@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v0.4.2] - 2026-11-20
+
+### Fix
+- handle git tag failures and escape shell args
+
 ## [v0.4.1] - 2026-11-20
 
 ### Feat(sync)
