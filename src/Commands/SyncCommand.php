@@ -112,20 +112,53 @@ class SyncCommand extends Command
 
         exec("git log v".implode('.', $tag)."..HEAD --pretty=format:'%s'", $gitCommits);
 
+        return $this->groupCommits($gitCommits);
+    }
+
+    /**
+     * Group commit subjects by their base type, ignoring any
+     * "(scope)" and "!" markers, e.g. "feat(api)!: x" => feature.
+     */
+    private function groupCommits(array $subjects): array
+    {
         $commits = [];
 
-        foreach ($gitCommits as $commit) {
-            $commit = explode(':', $commit);
-
-            if (! isset($commit[1])) {
-                $commit[1] = $commit[0];
-                $commit[0] = 'chore';
+        foreach ($subjects as $subject) {
+            if (preg_match('/^\s*([A-Za-z]+)(?:\([^)]*\))?!?\s*:\s*(.+)$/', $subject, $matches)) {
+                $type = $this->normalizeType($matches[1]);
+                $message = $matches[2];
+            } else {
+                $type = 'chore';
+                $message = $subject;
             }
 
-            $commits[$commit[0]][] = trim($commit[1]);
+            $commits[$type][] = trim($message);
         }
 
         return $commits;
+    }
+
+    private function normalizeType(string $type): string
+    {
+        $type = strtolower($type);
+
+        $aliases = [
+            'feat' => 'feature',
+            'features' => 'feature',
+            'add' => 'feature',
+            'added' => 'feature',
+            'fixed' => 'fix',
+            'fixes' => 'fix',
+            'bugfix' => 'fix',
+            'hotfix' => 'fix',
+            'chores' => 'chore',
+            'doc' => 'docs',
+            'perf' => 'performance',
+            'tests' => 'test',
+            'changed' => 'change',
+        ];
+
+        return $aliases[$type] ?? $type;
     }
 
     private function getCurrentVersion()
