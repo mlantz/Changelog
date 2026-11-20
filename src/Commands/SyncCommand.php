@@ -84,7 +84,12 @@ class SyncCommand extends Command
 
             if (file_put_contents(getcwd().'/'.$changelogCase.'.md', $markdown)) {
                 $output->writeln('Changelog updated');
-                $this->tagGIT($newVersion, $summary, $changelogCase);
+                if (! $this->tagGIT($newVersion, $summary, $changelogCase, $gitOutput)) {
+                    $output->writeln('<error>Failed to commit and tag '.$newVersion.':</error>');
+                    $output->writeln(implode("\n", $gitOutput));
+
+                    return Command::FAILURE;
+                }
                 $output->writeln('Commit updated');
                 $output->writeln('Repository Tagged with: '.$newVersion);
             }
@@ -110,7 +115,7 @@ class SyncCommand extends Command
     {
         $tag = $this->getCurrentVersion();
 
-        exec("git log v".implode('.', $tag)."..HEAD --pretty=format:'%s'", $gitCommits);
+        exec('git log '.escapeshellarg('v'.implode('.', $tag).'..HEAD')." --pretty=format:'%s'", $gitCommits);
 
         return $this->groupCommits($gitCommits);
     }
@@ -175,9 +180,18 @@ class SyncCommand extends Command
         return $version;
     }
 
-    private function tagGIT($version, $summary, $changelogCase)
+    private function tagGIT($version, $summary, $changelogCase, &$gitOutput = [])
     {
-        exec("git commit '".getcwd().'/'.$changelogCase.'.md'."' -m 'Changelog.md update' && git tag -a ".$version." -m '".$summary."'");
+        $file = getcwd().'/'.$changelogCase.'.md';
+
+        exec(
+            'git commit '.escapeshellarg($file).' -m '.escapeshellarg('Changelog.md update')
+            .' && git tag -a '.escapeshellarg($version).' -m '.escapeshellarg($summary).' 2>&1',
+            $gitOutput,
+            $exitCode
+        );
+
+        return $exitCode === 0;
     }
 
     private function getChangelogCase()
